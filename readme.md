@@ -1,6 +1,6 @@
 To Run the project:
 
-1) Run crazyAir and toughJet api.
+1) Run crazyAir and toughJet api. .
 
 To Access Swagger documentation:
 http://localhost:8082/swagger-ui/index.html
