@@ -1,0 +1,38 @@
+server:
+  port: 8082
+spring:
+  security:
+    user:
+      name: "sa"
+      password: "sa"
+crazyAir:
+  url:
+    getFlights: "http://localhost:8080/crazyair/flightSchedules"
+  api:
+    username: "sa"
+    password: "sa"
+toughJet:
+  url:
+    getFlights: "http://localhost:8081/toughjet/flightSchedules"
+  api:
+    username: "sa"
+    password: "sa"
+---
+spring:
+  profile: test
+  security:
+    user:
+      name: "sa"
+      password: "sa"
+  crazyAir:
+    url:
+      getFlights: "http://localhost:8080/crazyair/flightSchedules"
+    api:
+      username: "sa"
+      password: "sa"
+  toughJet:
+    url:
+      getFlights: "http://localhost:8081/toughjet/flightSchedules"
+    api:
+      username: "sa"
+      password: "sa"
