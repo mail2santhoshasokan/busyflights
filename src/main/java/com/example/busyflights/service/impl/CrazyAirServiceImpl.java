@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
@@ -16,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 public class CrazyAirServiceImpl implements CrazyAirService {
@@ -37,7 +39,8 @@ public class CrazyAirServiceImpl implements CrazyAirService {
     private BusyFlightParser busyFlightParser;
 
     @Override
-    public List<BusyFlight> getFlightFromCrazyAir(String origin, String destination, String departureDate, String returnDate, int passengerCount) {
+    @Async("asyncExecutor")
+    public CompletableFuture<List<BusyFlight>> getFlightFromCrazyAir(String origin, String destination, String departureDate, String returnDate, int passengerCount) {
         ResponseEntity<CrazyAir[]> response = null;
         restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -55,8 +58,8 @@ public class CrazyAirServiceImpl implements CrazyAirService {
             e.printStackTrace();
         }
         if (response.getStatusCode().is2xxSuccessful() & response.getBody().length > 0) {
-            return busyFlightParser.parseCrazyAirFlights(Arrays.asList(response.getBody()));
+            return CompletableFuture.completedFuture(busyFlightParser.parseCrazyAirFlights(Arrays.asList(response.getBody())));
         }
-        return Collections.EMPTY_LIST;
+        return CompletableFuture.completedFuture(Collections.EMPTY_LIST);
     }
 }

@@ -8,6 +8,7 @@ import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class TestFactory {
 
@@ -34,7 +35,7 @@ public class TestFactory {
         return Arrays.asList(crazyAir, toughJet);
     }
 
-    public static List<BusyFlight> parsedScheduleCrazyAir() {
+    public static CompletableFuture<List<BusyFlight>> parsedScheduleCrazyAir() {
         BusyFlight crazyAir = new BusyFlight();
         crazyAir.setAirline("BritishAirways");
         crazyAir.setSupplier("CrazyAir");
@@ -44,10 +45,10 @@ public class TestFactory {
         crazyAir.setDepartureDate(LocalDateTime.now().toString());
         crazyAir.setArrivalDate(LocalDateTime.now().toString());
 
-        return Arrays.asList(crazyAir);
+        return CompletableFuture.completedFuture(Arrays.asList(crazyAir));
     }
 
-    public static List<BusyFlight> parsedScheduleToughJet() {
+    public static CompletableFuture<List<BusyFlight>> parsedScheduleToughJet() {
         BusyFlight toughJet = new BusyFlight();
         toughJet.setAirline("Lufthansa");
         toughJet.setSupplier("ToughJet");
@@ -56,7 +57,7 @@ public class TestFactory {
         toughJet.setDestinationAirportCode("COK");
         toughJet.setDepartureDate(LocalDateTime.now().toString());
         toughJet.setArrivalDate(LocalDateTime.now().toString());
-        return Arrays.asList(toughJet);
+        return CompletableFuture.completedFuture(Arrays.asList(toughJet));
     }
 
     public static List<CrazyAir> crazyAirList() {
